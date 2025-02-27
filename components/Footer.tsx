@@ -5,7 +5,7 @@ import { socialMedia } from '@/data'
 
 const Footer = () => {
   return (
-    <footer className='w-full pt-20 p-10 mb-[100px] md:mb-5' id='contact'>
+    <footer className='w-full pt-20 p-10 mb-[100px] md:mb-' id='contact'>
 
       <div className='flex flex-col items-center'>
         <h1 className='heading lg:max-w-[45vw]'>
@@ -27,10 +27,14 @@ const Footer = () => {
 
         <div className='flex items-center md:gap-3 gap-6'>
             {socialMedia.map((profile)=>(
+              <a href={profile.link} target='_blank' rel='noreferrer'>
                 <div key={profile.id} className='w-10 h-10 cursor-pointer flex justify-center items-center backdrop-filter backdrop-blur-lg saturate-180 bg-opacity-75 bg-black-200 rounded-lg border border-black-300'>
-                    <img src={profile.img} alt={profile.id.toString()}
+                  
+                  <img src={profile.img} alt={profile.id.toString()}
                     width={20} height={20} />
+                    
                 </div>
+                </a>
             ))}
         </div>
       </div>

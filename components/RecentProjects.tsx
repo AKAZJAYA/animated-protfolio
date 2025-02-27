@@ -19,8 +19,8 @@ const RecentProjects = () => {
             key={item.id}
           >
             <PinContainer
-              title="/ui.aceternity.com"
-              href="https://twitter.com/mannupaaji"
+              title={item.name}
+              href={item.link}
             >
               <div className="relative flex items-center justify-center sm:w-96 w-[80vw] overflow-hidden h-[20vh] lg:h-[30vh] mb-10">
                 <div
@@ -32,7 +32,7 @@ const RecentProjects = () => {
                 <img
                   src={item.img}
                   alt="cover"
-                  className="z-10 absolute bottom-0"
+                  className="rotate-12 mb-10 z-10 absolute bottom-0"
                 />
               </div>
 
