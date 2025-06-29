@@ -96,7 +96,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
       _buildData();
       _buildMaterial();
     }
-  }, [globeRef.current]);
+  }, [globeRef.current, data, globeConfig]);
 
   const _buildMaterial = () => {
     if (!globeRef.current) return;
@@ -115,7 +115,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
 
   const _buildData = () => {
     const arcs = data;
-    let points = [];
+    const points = [];
     for (let i = 0; i < arcs.length; i++) {
       const arc = arcs[i];
       const rgb = hexToRgb(arc.color) as { r: number; g: number; b: number };
@@ -177,24 +177,24 @@ export function Globe({ globeConfig, data }: WorldProps) {
       .arcAltitude((e) => {
         return (e as { arcAlt: number }).arcAlt * 1;
       })
-      .arcStroke((e) => {
+      .arcStroke(() => {
         return [0.32, 0.28, 0.3][Math.round(Math.random() * 2)];
       })
       .arcDashLength(defaultProps.arcLength)
-      .arcDashInitialGap((e) => (e as { order: number }).order * 1)
+      .arcDashInitialGap((arc: { order: number }) => arc.order * 1)
       .arcDashGap(15)
       .arcDashAnimateTime((e) => defaultProps.arcTime);
 
     globeRef.current
       .pointsData(data)
-      .pointColor((e) => (e as { color: string }).color)
+      .pointColor((point: { color: string }) => point.color)
       .pointsMerge(true)
       .pointAltitude(0.0)
       .pointRadius(2);
 
     globeRef.current
       .ringsData([])
-      .ringColor((e: any) => (t: any) => e.color(t))
+      .ringColor((ring: { color: (t: number) => string }) => ring.color)
       .ringMaxRadius(defaultProps.maxRings)
       .ringPropagationSpeed(RING_PROPAGATION_SPEED)
       .ringRepeatPeriod(
@@ -300,6 +300,5 @@ export function genRandomNumbers(min: number, max: number, count: number) {
     const r = Math.floor(Math.random() * (max - min)) + min;
     if (arr.indexOf(r) === -1) arr.push(r);
   }
-
   return arr;
 }

@@ -11,15 +11,21 @@ const Approach = () => {
         My <span className="text-purple">Approach</span>
       </h1>
       <div className="my-20 flex flex-col lg:flex-row items-center justify-center gap-4 mx-auto px-8">
-        <Card title="Planning And Strategy" icon={<AceternityIcon order="Phase 1"/>}
-        description="I plan and strategize the project to ensure a smooth development process.">
+        <Card
+          title="Planning And Strategy"
+          icon={<AceternityIcon order="Phase 1" />}
+          description="I plan and strategize the project to ensure a smooth development process."
+        >
           <CanvasRevealEffect
             animationSpeed={5.1}
             containerClassName="bg-emerald-900"
           />
         </Card>
-        <Card title="Nisha is Munni" icon={<AceternityIcon order="Phase 2"/>}
-        description="I plan and strategize the project to ensure a smooth development process.">
+        <Card
+          title="Nisha is Munni"
+          icon={<AceternityIcon order="Phase 2" />}
+          description="I plan and strategize the project to ensure a smooth development process."
+        >
           <CanvasRevealEffect
             animationSpeed={3}
             containerClassName="bg-black"
@@ -32,8 +38,11 @@ const Approach = () => {
           {/* Radial gradient for the cute fade */}
           <div className="absolute inset-0 [mask-image:radial-gradient(400px_at_center,white,transparent)] bg-black/50 dark:bg-black/90" />
         </Card>
-        <Card title="Munni is Aditi" icon={<AceternityIcon order="Phase 3"/>}
-        description="I plan and strategize the project to ensure a smooth development process.">
+        <Card
+          title="Munni is Aditi"
+          icon={<AceternityIcon order="Phase 3" />}
+          description="I plan and strategize the project to ensure a smooth development process."
+        >
           <CanvasRevealEffect
             animationSpeed={3}
             containerClassName="bg-sky-600"
@@ -49,7 +58,7 @@ const Card = ({
   title,
   icon,
   children,
-  description
+  description,
 }: {
   title: string;
   icon: React.ReactNode;
@@ -87,7 +96,10 @@ const Card = ({
         <h2 className="dark:text-white text-3xl opacity-0 group-hover/canvas-card:opacity-100 relative z-10 text-black mt-4  font-bold group-hover/canvas-card:text-white group-hover/canvas-card:-translate-y-2 transition duration-200 text-center">
           {title}
         </h2>
-        <h2 className="text-sm dark:text-white opacity-0 group-hover/canvas-card:opacity-100 relative z-10 text-black mt-4  font-bold group-hover/canvas-card:text-white group-hover/canvas-card:-translate-y-2 transition duration-200 text-center" style={{color: '#e4ecff'}}>
+        <h2
+          className="text-sm dark:text-white opacity-0 group-hover/canvas-card:opacity-100 relative z-10 text-black mt-4  font-bold group-hover/canvas-card:text-white group-hover/canvas-card:-translate-y-2 transition duration-200 text-center"
+          style={{ color: "#e4ecff" }}
+        >
           {description}
         </h2>
       </div>
@@ -95,20 +107,26 @@ const Card = ({
   );
 };
 
-const AceternityIcon = ({order} : {order:string}) => {
+const AceternityIcon = ({ order }: { order: string }) => {
   return (
     <div>
-        <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-5 py-2 font-bold text-white backdrop-blur-3xl text-2xl">
-                {order}
-            </span>
-        </button>
+      <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+        <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-5 py-2 font-bold text-white backdrop-blur-3xl text-2xl">
+          {order}
+        </span>
+      </button>
     </div>
   );
 };
 
-export const Icon = ({ className, ...rest }: any) => {
+export const Icon = ({
+  className,
+  ...rest
+}: {
+  className?: string;
+  [key: string]: unknown;
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

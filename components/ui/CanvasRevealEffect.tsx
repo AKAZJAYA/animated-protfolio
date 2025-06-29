@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import React, { useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 export const CanvasRevealEffect = ({
@@ -181,6 +181,7 @@ type Uniforms = {
     type: string;
   };
 };
+
 const ShaderMaterial = ({
   source,
   uniforms,
@@ -195,24 +196,11 @@ const ShaderMaterial = ({
   const ref = useRef<THREE.Mesh>(null);
   let lastFrameTime = 0;
 
-  useFrame(({ clock }) => {
-    if (!ref.current) return;
-    const timestamp = clock.getElapsedTime();
-    if (timestamp - lastFrameTime < 1 / maxFps) {
-      return;
-    }
-    lastFrameTime = timestamp;
-
-    const material: any = ref.current.material;
-    const timeLocation = material.uniforms.u_time;
-    timeLocation.value = timestamp;
-  });
-
-  const getUniforms = () => {
-    const preparedUniforms: any = {};
+  const getUniforms = useCallback(() => {
+    const preparedUniforms: Record<string, unknown> = {};
 
     for (const uniformName in uniforms) {
-      const uniform: any = uniforms[uniformName];
+      const uniform = uniforms[uniformName];
 
       switch (uniform.type) {
         case "uniform1f":
@@ -250,11 +238,11 @@ const ShaderMaterial = ({
     preparedUniforms["u_time"] = { value: 0, type: "1f" };
     preparedUniforms["u_resolution"] = {
       value: new THREE.Vector2(size.width * 2, size.height * 2),
-    }; // Initialize u_resolution
+    };
     return preparedUniforms;
-  };
+  }, [uniforms, size.width, size.height]);
 
-  // Shader material
+  // Fix material with proper type
   const material = useMemo(() => {
     const materialObject = new THREE.ShaderMaterial({
       vertexShader: `
@@ -279,7 +267,7 @@ const ShaderMaterial = ({
     });
 
     return materialObject;
-  }, [size.width, size.height, source]);
+  }, [size.width, size.height, source, getUniforms]);
 
   return (
     <mesh ref={ref as any}>

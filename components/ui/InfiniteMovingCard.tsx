@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export const InfiniteMovingCards = ({
   items,
@@ -23,11 +23,7 @@ export const InfiniteMovingCards = ({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const scrollerRef = React.useRef<HTMLUListElement>(null);
 
-  useEffect(() => {
-    addAnimation();
-  }, []);
-  const [start, setStart] = useState(false);
-  function addAnimation() {
+  const addAnimation = useCallback(() => {
     if (containerRef.current && scrollerRef.current) {
       const scrollerContent = Array.from(scrollerRef.current.children);
 
@@ -42,7 +38,13 @@ export const InfiniteMovingCards = ({
       getSpeed();
       setStart(true);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    addAnimation();
+  }, [addAnimation]);
+
+  const [start, setStart] = useState(false);
   const getDirection = () => {
     if (containerRef.current) {
       if (direction === "left") {
@@ -85,11 +87,11 @@ export const InfiniteMovingCards = ({
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
       >
-        {items.map((item, idx) => (
+        {items.map((item) => (
           <li
             className="w-[90vw max-w-full relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-800 p-5 md:py-16 md:w-[60vw]"
             style={{
-                background: "rgb(4,7,29)",
+              background: "rgb(4,7,29)",
               backgroundColor:
                 "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
             }}
@@ -105,19 +107,17 @@ export const InfiniteMovingCards = ({
               </span>
               <div className="relative z-20 mt-6 flex flex-row items-center">
                 <span className="flex flex-col gap-1">
-                    <div className="me-3">
-                        <img
-                            src="/profile.svg" alt='profile'
-                            />
-                    </div>
-                    <div className="flex flex-col gap-1">
-                  <span className=" text-xl leading-[1.6] text-white font-bold">
-                    {item.name}
-                  </span>
-                  <span className=" text-sm leading-[1.6] text-white-200 font-normal">
-                    {item.title}
-                  </span>
-                    </div>
+                  <div className="me-3">
+                    <img src="/profile.svg" alt="profile" />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className=" text-xl leading-[1.6] text-white font-bold">
+                      {item.name}
+                    </span>
+                    <span className=" text-sm leading-[1.6] text-white-200 font-normal">
+                      {item.title}
+                    </span>
+                  </div>
                 </span>
               </div>
             </blockquote>
